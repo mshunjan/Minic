@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# python
+__pycache__
+metaphlan_db
+data
+
+# configs
+.env
