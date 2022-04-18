@@ -6,22 +6,37 @@ class Process():
         self.inp = inp
         self.out_dir = out_dir
         self.input_type = input_type
-        self.bowtie_out =  "{}/{}{}".format(self.out_dir, filename,".bowtie2.out")
+        self.bowtie_out =  "{}/{}{}".format(self.out_dir, filename,".bowtie2out.txt")
         self.mpa_out =  "{}/{}{}".format(self.out_dir, filename, ".out.txt")
         
         self.db = settings.MPA_DB
+        self.cores =4
     
     def _command_generator(self):
         '''
         Generates commands for tool being run
         ''' 
-        commands_lst = [
+        if self.input_type == 'bowtie2out':
+             commands_lst = [
+                "metaphlan",
+                self.inp,
+                "--input_type",
+                self.input_type,
+                "--nproc",
+                self.cores,
+                "-o",
+                self.mpa_out
+            ] 
+        else:
+            commands_lst = [
                 "metaphlan",
                 self.inp,
                 "--input_type",
                 self.input_type,
                 "--bowtie2out",
                 self.bowtie_out,
+                "--nproc",
+                self.cores,
                 "-o",
                 self.mpa_out,
                 "--bowtie2db",

@@ -33,10 +33,10 @@ async def run_pipeline(files: list[UploadFile] = File(...)):
         with open(file_dir, "wb+") as f:
                 shutil.copyfileobj(file.file, f)
 
-    manage = Manage(jobs, uploads_dir,result_dir)
+    manage = Manage(jobs, uploads_dir,result_dir, 5)
     data = await manage.run()
     d3_data = data.to_json(orient='index')
     
-    return {'data': d3_data}
+    return d3_data
         
     

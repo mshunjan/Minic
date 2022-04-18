@@ -11,19 +11,18 @@ class Manage():
         self.results = []
         self.thresh = thresh
     
-    def read(self,filename, skip=3, delimeter='\t'):
+    def _read(self,file_dir, sample_name, skip=3, delimeter='\t'):
         '''
         reads in mpa output, and returns species only relative abundance
         '''
-        df = pd.read_table(filename, sep=delimeter, skiprows=skip)
-        sample_name = filename.split('.')[0]
+        df = pd.read_table(file_dir, sep=delimeter, skiprows=skip)
         df.rename(columns={'#clade_name': 'ID', 'relative_abundance':sample_name},      inplace=True)
         df = df[(df['ID'].str.lower().str.contains('s__'))]
         df.reset_index(drop=True,inplace=True)
         df.drop(columns={'NCBI_tax_id', 'additional_species'}, inplace=True)
         return df
 
-    def merge(self, df_lst):
+    def _merge(self, df_lst):
         '''
         merges dataframes
         '''
@@ -32,31 +31,35 @@ class Manage():
         df.fillna(0,inplace=True)
         return df
     
-    def process_dfs(self, dfs):
+    def _process_files(self, files):
         '''
-        takes a list of dfs and merges them
+        takes a list of files, reads them in as dataframes and merges them
         '''
-        if len(dfs) >1:
-          df_lst = []
-          for df in dfs:
-            segment = self.read(df)
-            df_lst.append(segment)
-          return self.merge(df_lst)
+        if len(files) >1:
+            df_lst = []
+            for file in files:
+                segment = self._read(file_dir=file['file_dir'], sample_name=file['sample_name'])
+                df_lst.append(segment)
+            merged =  self._merge(df_lst)
+            return merged
         else:
-          segment = self.read(dfs[0])
-          return segment
+            segment = self._read(files[0]['file_dir'], files[0]['sample_name'])
+            return segment
     
     async def run(self):
         for job in self.jobs:
             process = Process(job['inp'], self.results_dir, job['input_type'], job['filename'])
             await process.run()
-            self.results.append(process.mpa_out)
+            self.results.append({"file_dir": process.mpa_out, "sample_name": job['filename']})
+            processed = [x['sample_name'] for x in self.results]
+            print(f'processed {processed} so far')
 
         shutil.rmtree(self.uploads_dir)
 
-        samples = [x['inp'] for x in self.jobs]
-        matrx = self.process_dfs(samples)
-        downstream = Downstream(matrx, self.thresh)
+        merged = self._process_files(self.results)
+        downstream = Downstream(merged, self.thresh)
 
         data = downstream.run()
+        shutil.rmtree(self.results_dir)
+        print(data)
         return data

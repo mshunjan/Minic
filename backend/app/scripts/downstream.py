@@ -64,4 +64,4 @@ class Downstream():
   def run(self):
     df = self._create_other(self.df, self.thresh)
     final_df = self._create_species_col(df)
-    return df
+    return final_df
