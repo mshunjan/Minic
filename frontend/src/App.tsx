@@ -1,43 +1,39 @@
-import { useState } from 'react'
-import logo from './logo.svg'
 import './App.css'
-
+import Home from './pages/Home'
+import Background from './components/Background/'
+import { createTheme, ThemeProvider, CssBaseline, GlobalStyles } from '@mui/material'
+import { indigo } from '@mui/material/colors';
+import { QueryClient, QueryClientProvider } from 'react-query';
 function App() {
-  const [count, setCount] = useState(0)
+  const theme = createTheme({
+    typography: {
+      fontFamily: 'Montserrat',
+      fontSize: 18,
+    },
+    palette: {
+      primary: indigo,
+      background: {
+        default: indigo[800],
+        paper: indigo[200]
+      }
+    }
+  })
+  const queryClient = new QueryClient();
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div className="App" style={{ width: '100vw', height: "100vh" }}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <GlobalStyles
+          styles={{
+            body: { backgroundColor: indigo[300] },
+          }}
+        />
+        <QueryClientProvider client={queryClient}>
+          <Home />
+        </QueryClientProvider>
+
+      </ThemeProvider>
     </div>
   )
 }

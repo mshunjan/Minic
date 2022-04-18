@@ -1,0 +1,35 @@
+{
+    "data": "{\"Corynebacterium_matruchotii\":{\"SRS014476-Supragingival_plaque\":66.19688,\"SRS014494-Posterior_fornix\":0.0,\"SRS014464-Anterior_nares\":0.0,\"SRS014472-Buccal_mucosa\":0.0,\"SRS014470-Tongue_dorsum\":0.0},\"Rothia_dentocariosa\":{\"SRS014476-Supragingival_plaque\":33.80312,\"SRS014494-Posterior_fornix\":0.0,\"SRS014464-Anterior_nares\":0.0,\"SRS014472-Buccal_mucosa\":0.0,\"SRS014470-Tongue_dorsum\":0.0},\"Lactobacillus_crispatus\":{\"SRS014476-Supragingival_plaque\":0.0,\"SRS014494-Posterior_fornix\":80.61712,\"SRS014464-Anterior_nares\":0.0,\"SRS014472-Buccal_mucosa\":0.0,\"SRS014470-Tongue_dorsum\":0.0},\"Lactobacillus_iners\":{\"SRS014476-Supragingival_plaque\":0.0,\"SRS014494-Posterior_fornix\":19.38288,\"SRS014464-Anterior_nares\":0.0,\"SRS014472-Buccal_mucosa\":0.0,\"SRS014470-Tongue_dorsum\":0.0},\"Moraxella_nonliquefaciens\":{\"SRS014476-Supragingival_plaque\":0.0,\"SRS014494-Posterior_fornix\":0.0,\"SRS014464-Anterior_nares\":97.28734,\"SRS014472-Buccal_mucosa\":0.0,\"SRS014470-Tongue_dorsum\":0.0},\"Streptococcus_mitis\":{\"SRS014476-Supragingival_plaque\":0.0,\"SRS014494-Posterior_fornix\":0.0,\"SRS014464-Anterior_nares\":0.0,\"SRS014472-Buccal_mucosa\":79.55714,\"SRS014470-Tongue_dorsum\":0.0},\"Gemella_haemolysans\":{\"SRS014476-Supragingival_plaque\":0.0,\"SRS014494-Posterior_fornix\":0.0,\"SRS014464-Anterior_nares\":0.0,\"SRS014472-Buccal_mucosa\":19.08758,\"SRS014470-Tongue_dorsum\":0.0},\"Prevotella_histicola\":{\"SRS014476-Supragingival_plaque\":0.0,\"SRS014494-Posterior_fornix\":0.0,\"SRS014464-Anterior_nares\":0.0,\"SRS014472-Buccal_mucosa\":0.0,\"SRS014470-Tongue_dorsum\":51.90081},\"Veillonella_dispar\":{\"SRS014476-Supragingival_plaque\":0.0,\"SRS014494-Posterior_fornix\":0.0,\"SRS014464-Anterior_nares\":0.0,\"SRS014472-Buccal_mucosa\":0.0,\"SRS014470-Tongue_dorsum\":40.08418},\"Prevotella_pallens\":{\"SRS014476-Supragingival_plaque\":0.0,\"SRS014494-Posterior_fornix\":0.0,\"SRS014464-Anterior_nares\":0.0,\"SRS014472-Buccal_mucosa\":0.0,\"SRS014470-Tongue_dorsum\":5.05548},\"Other\":{\"SRS014476-Supragingival_plaque\":0.0,\"SRS014494-Posterior_fornix\":0.0,\"SRS014464-Anterior_nares\":2.71266,\"SRS014472-Buccal_mucosa\":1.35528,\"SRS014470-Tongue_dorsum\":2.95953}}",
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+        "content-length": "2234",
+        "content-type": "application/json"
+    },
+    "config": {
+        "transitional": {
+            "silentJSONParsing": true,
+            "forcedJSONParsing": true,
+            "clarifyTimeoutError": false
+        },
+        "transformRequest": [
+            null
+        ],
+        "transformResponse": [
+            null
+        ],
+        "timeout": 0,
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN",
+        "maxContentLength": -1,
+        "maxBodyLength": -1,
+        "headers": {
+            "Accept": "application/json, text/plain, */*"
+        },
+        "baseURL": "http://localhost:8080/",
+        "method": "post",
+        "url": "upload/",
+        "data": {}
+    },
+    "request": {}
+}
