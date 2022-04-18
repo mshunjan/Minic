@@ -1,7 +1,7 @@
 from uuid import uuid4
 from fastapi import APIRouter, File, UploadFile 
 from app.config.settings import settings
-from app.scripts.process import Process
+from app.scripts.manage import Manage
 
 import os, shutil
 
@@ -12,28 +12,31 @@ router = APIRouter(
 
 @router.post('/')
 async def run_pipeline(files: list[UploadFile] = File(...)):  
-    file_id_lst = []
+    # generate id per submission (for group or single file)
+    file_id = str(uuid4())
+    uploads_dir = "{}/{}".format(settings.UPLOADS, file_id)
+    result_dir = "{}/{}".format(settings.RESULTS, file_id)
+    os.mkdir(uploads_dir)
+    os.mkdir(result_dir)
+
+    jobs = []
+    
     for file in files: 
-        file_extensions = file.filename.split(".")[1:]
-        file_type = file_extensions[0]
-        file_id = str(uuid4())
-        file_location = "{}/{}".format(settings.UPLOADS, file_id)
-        result_dir = "{}/{}".format(settings.RESULTS, file_id)
+        filename_split = file.filename.split(".")
+        filename = filename_split[0]
+        file_extensions = filename_split[1:]
+        file_type = file_extensions[0] 
+        file_dir = "{}/{}".format(uploads_dir, file.filename)
+        job = {'filename' : filename, 'input_type': file_type, 'inp': file_dir}
+        jobs.append(job)
 
-        os.mkdir(file_location)
-        os.mkdir(result_dir)
-
-        file_dir = "{}/{}".format(file_location, file.filename)
         with open(file_dir, "wb+") as f:
                 shutil.copyfileobj(file.file, f)
-        file_id_lst.append(file_id)
 
-        process = Process(file_dir,result_dir, file_type)
-
-        result = await process.run()
-        shutil.rmtree(file_location)
-        
+    manage = Manage(jobs, uploads_dir,result_dir)
+    data = await manage.run()
+    d3_data = data.to_json(orient='index')
     
-    return {'result': file.filename}
+    return {'data': d3_data}
         
     

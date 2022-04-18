@@ -1,14 +1,13 @@
 import asyncio 
-import pandas as pd
 from app.config.settings import settings
 
 class Process():
-    def __init__(self, inp, out_dir, input_type):
+    def __init__(self, inp, out_dir, input_type, filename):
         self.inp = inp
         self.out_dir = out_dir
         self.input_type = input_type
-        self.bowtie_out =  "{}/{}".format(self.out_dir, "bowtie2.out")
-        self.mpa_out =  "{}/{}".format(self.out_dir, "out.txt")
+        self.bowtie_out =  "{}/{}{}".format(self.out_dir, filename,".bowtie2.out")
+        self.mpa_out =  "{}/{}{}".format(self.out_dir, filename, ".out.txt")
         
         self.db = settings.MPA_DB
     
