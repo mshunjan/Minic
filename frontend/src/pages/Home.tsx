@@ -1,13 +1,18 @@
 import { Box, CircularProgress, Paper, Grid, Typography } from "@mui/material";
-import { FormContainer, StyledButton } from "./StyledHome";
+import { FormContainer } from "./StyledHome";
 import { useMutation } from "react-query";
 import { useUploads } from '../api/Uploads'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CustomDropZone from "../components/CustomDropZone";
+import testdataset from '../assets/testdataset.json'
+import testbarchart from '../assets/testbarchart.json'
 
+import ButtonAppBar from '../components/ButtonAppBar'
+import Chart from '../components/Chart'
 const Home = () => {
     const uploads = useUploads()
     const [data, setData] = useState(null)
+
 
     const send_upload = (files) => {
         return uploads.upload(files)
@@ -30,27 +35,28 @@ const Home = () => {
                 justifyContent="center"
             >
                 <Grid item xs={12}>
-                    <Paper>
-                        <Typography variant='h1'>
-                            MINIC
-                        </Typography>
-                    </Paper>
+                    <ButtonAppBar />
                 </Grid>
-                <Grid item xs={6} p={2}>
-                    <FormContainer>
-                        <Grid item xs={12} p={2}>
-                            {upload.isLoading ?
+                <Grid item xs={12} p={2}>
+                    <Grid container direction={'column'} justifyContent='center' alignContent={'center'}>
+                            <FormContainer>
+                                <Typography>Upload your file(s)!</Typography>
+                                <Grid item xs={12} p={2}>
+                                    {upload.isLoading ?
 
-                                <CircularProgress variant="indeterminate" />
+                                        <CircularProgress variant="indeterminate" />
 
-                                :
-                                upload.data ?
-                                    JSON.stringify(data)
-                                    :
-                            <CustomDropZone handleSubmit={upload.mutate} />
-                            }
-                            </Grid>
-                    </FormContainer>
+                                        :
+                                        data ?
+                                            <>
+                                                <Chart data={data} />
+                                            </>
+                                            :
+                                            <CustomDropZone handleSubmit={upload.mutate} />
+                                    }
+                                </Grid>
+                            </FormContainer>
+                    </Grid>
                 </Grid>
             </Grid>
         </Box>

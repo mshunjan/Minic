@@ -14,7 +14,7 @@ function App() {
       primary: indigo,
       background: {
         default: indigo[800],
-        paper: indigo[200]
+        paper: indigo[300]
       }
     }
   })
@@ -26,7 +26,7 @@ function App() {
         <CssBaseline />
         <GlobalStyles
           styles={{
-            body: { backgroundColor: indigo[300] },
+            body: { backgroundColor: indigo[600] },
           }}
         />
         <QueryClientProvider client={queryClient}>

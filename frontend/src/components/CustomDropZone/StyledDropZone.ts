@@ -19,6 +19,4 @@ export const FormContainer = styled(Paper)`
 
 export const StyledButton = styled(Button)`
     margin-top: 1.5em;
-    margin-bottom: 3em;
-    padding: 1rem;
 `

@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone'
-import { Card, CardActionArea, Typography, Grid, IconButton } from '@mui/material';
+import { Card, CardActionArea, Typography, Grid, IconButton, Tooltip } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import UploadIcon from '@mui/icons-material/Upload';
 import { StyledButton } from './StyledDropZone';
 function CustomDropZone({ handleSubmit }) {
   const [files, setFiles] = useState([]);
@@ -22,14 +23,7 @@ function CustomDropZone({ handleSubmit }) {
   useEffect(() => {
     if (files.length == 0) {
       setDisabled(true)
-    } 
-    // files.forEach(file => {
-    //   const reader = new FileReader()
-    //   reader.onload = () => {
-    //     setDataFiles( prevState => [...prevState, reader.result])
-    //   }
-    //   reader.readAsDataURL(file)
-    // })
+    }
   }, [files])
 
 
@@ -37,12 +31,12 @@ function CustomDropZone({ handleSubmit }) {
     const newFiles = [...files]
     newFiles.splice(newFiles.indexOf(file), 1)
     setFiles(newFiles)
-  } 
+  }
 
   const submitFN = () => {
     console.log(files)
     const formData = new FormData()
-    files.forEach(file=> {
+    files.forEach(file => {
       formData.append('files', file)
     })
     handleSubmit(formData)
@@ -52,21 +46,20 @@ function CustomDropZone({ handleSubmit }) {
   return (
     <>
       <Card variant="outlined">
-        <CardActionArea>
-          {/* {fileRejections.length > 0 ? <Alert severity='error'>Invalid File Type!</Alert> : null} */}
+        <Tooltip title={"Click here or drop a file to upload!"} followCursor>
           <div {...getRootProps()}>
             <input {...getInputProps()} />
             {!isDragActive &&
               <Grid container justifyContent={'center'} alignItems={'center'}>
-                <Grid item xs={12} p={2}>
-                  <Typography variant='h6'>Click here or drop a file to upload!</Typography>
+                  <CardActionArea style={{ width: '400px', height: '200px' }}>
+                    <UploadIcon style={{ width: '75px', height: '50px' }}/>
+                  </CardActionArea>
 
-                </Grid>
               </Grid>}
 
           </div>
-        </CardActionArea>
-        <Card elevation={4}>
+        </Tooltip>
+        <Card elevation={4} style={{ backgroundColor: 'darkslateblue' }}>
           {files.map(file => (
             <Grid container justifyContent={'center'} alignItems={'center'}>
               <Typography fontSize={11}>

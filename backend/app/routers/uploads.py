@@ -35,7 +35,7 @@ async def run_pipeline(files: list[UploadFile] = File(...)):
 
     manage = Manage(jobs, uploads_dir,result_dir, 5)
     data = await manage.run()
-    d3_data = data.to_json(orient='index')
+    d3_data = data.to_dict()
     
     return d3_data
         
